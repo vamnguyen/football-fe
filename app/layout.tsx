@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
-import Providers from "@/providers/providers";
+import ReactQueryProvider from "@/providers/react-query-provider";
+import ToastProvider from "@/providers/toast-provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FootPred Community",
-  description: "AI-powered football prediction and community platform",
+  title: "AI Football",
+  description: "AI-powered football predictions and challenges",
 };
 
 export default function RootLayout({
@@ -18,12 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
+        <ReactQueryProvider>
+          <ToastProvider />
           <div className="min-h-screen flex flex-col">
             <Header />
-            <main className="mx-auto w-full max-w-7xl">{children}</main>
+            <main>{children}</main>
           </div>
-        </Providers>
+        </ReactQueryProvider>
       </body>
     </html>
   );

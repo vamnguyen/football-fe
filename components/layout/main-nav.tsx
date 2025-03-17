@@ -34,12 +34,6 @@ export function MainNav({
       >
         Thách đấu
       </Link>
-      <Link
-        href="/account"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Tài khoản
-      </Link>
     </nav>
   );
 }
