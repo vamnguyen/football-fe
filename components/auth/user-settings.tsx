@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export function UserNav() {
+export function UserSettings() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

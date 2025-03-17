@@ -1,39 +1,51 @@
+"use client";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+const navItems: NavItem[] = [
+  { href: "/", label: "Trang chủ" },
+  { href: "/predictions", label: "Dự đoán" },
+  { href: "/community", label: "Cộng đồng" },
+  { href: "/challenges", label: "Thách đấu" },
+];
 
 export function MainNav({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
+  const pathname = usePathname();
+
   return (
     <nav
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
-      <Link
-        href="/"
-        className="text-sm font-medium transition-colors hover:text-primary"
-      >
-        Trang chủ
-      </Link>
-      <Link
-        href="/predictions"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Dự đoán
-      </Link>
-      <Link
-        href="/community"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Cộng đồng
-      </Link>
-      <Link
-        href="/challenges"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Thách đấu
-      </Link>
+      {navItems.map((item) => {
+        const isActive =
+          pathname === item.href ||
+          (item.href !== "/" && pathname.startsWith(item.href));
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary",
+              isActive ? "text-primary font-semibold" : "text-muted-foreground"
+            )}
+            aria-current={isActive ? "page" : undefined}
+          >
+            {item.label}
+          </Link>
+        );
+      })}
     </nav>
   );
 }
