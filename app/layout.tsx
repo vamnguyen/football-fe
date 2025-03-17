@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
 import ReactQueryProvider from "@/providers/react-query-provider";
 import ToastProvider from "@/providers/toast-provider";
 
@@ -22,10 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReactQueryProvider>
           <ToastProvider />
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main>{children}</main>
-          </div>
+          {children}
         </ReactQueryProvider>
       </body>
     </html>
