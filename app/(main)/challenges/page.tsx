@@ -25,6 +25,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { landingAvatar2 } from "@/assets/images";
 
 export default function ChallengesPage() {
   return (
@@ -116,7 +117,7 @@ export default function ChallengesPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <Avatar>
-                        <AvatarImage src="/avatars/01.png" alt="User" />
+                        <AvatarImage src={landingAvatar2.src} alt="User" />
                         <AvatarFallback>U</AvatarFallback>
                       </Avatar>
                       <div>
@@ -191,7 +192,7 @@ export default function ChallengesPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <Avatar>
-                        <AvatarImage src="/avatars/01.png" alt="User" />
+                        <AvatarImage src={landingAvatar2.src} alt="User" />
                         <AvatarFallback>U</AvatarFallback>
                       </Avatar>
                       <div>
@@ -222,7 +223,7 @@ export default function ChallengesPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <Avatar>
-                        <AvatarImage src="/avatars/01.png" alt="User" />
+                        <AvatarImage src={landingAvatar2.src} alt="User" />
                         <AvatarFallback>U</AvatarFallback>
                       </Avatar>
                       <div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
@@ -24,6 +24,8 @@ import { signInSchema, SignInSchemaType } from "@/lib/validation";
 
 export function SignInForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   const {
     register,
     handleSubmit,
@@ -40,7 +42,7 @@ export function SignInForm() {
     try {
       await signIn(data);
       toast.success("Đăng nhập thành công");
-      router.push("/");
+      router.push(callbackUrl);
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Đăng nhập thất bại");
     }

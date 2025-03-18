@@ -25,6 +25,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { landingAvatar2 } from "@/assets/images";
 
 export default function AccountPage() {
   return (
@@ -45,7 +46,7 @@ export default function AccountPage() {
             <CardHeader>
               <div className="flex flex-col items-center">
                 <Avatar className="h-24 w-24">
-                  <AvatarImage src="/avatars/01.png" alt="User" />
+                  <AvatarImage src={landingAvatar2.src} alt="User" />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
                 <CardTitle className="mt-4">username</CardTitle>

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { landingAvatar2 } from "@/assets/images";
 
 export default function CommunityPage() {
   return (
@@ -37,7 +38,7 @@ export default function CommunityPage() {
                     {/* Chat Messages */}
                     <div className="flex gap-4">
                       <Avatar>
-                        <AvatarImage src="/avatars/01.png" alt="User" />
+                        <AvatarImage src={landingAvatar2.src} alt="User" />
                         <AvatarFallback>U</AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
@@ -78,7 +79,7 @@ export default function CommunityPage() {
                       </div>
                       <Avatar>
                         <AvatarImage
-                          src={`/avatars/0${rank}.png`}
+                          src={landingAvatar2.src}
                           alt={`User ${rank}`}
                         />
                         <AvatarFallback>U{rank}</AvatarFallback>
@@ -108,7 +109,7 @@ export default function CommunityPage() {
                       <div className="flex items-center gap-2">
                         <Avatar className="h-6 w-6">
                           <AvatarImage
-                            src={`/avatars/0${post}.png`}
+                            src={landingAvatar2.src}
                             alt={`User ${post}`}
                           />
                           <AvatarFallback>U{post}</AvatarFallback>
