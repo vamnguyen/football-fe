@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FOOTBALL_TEAMS } from "@/lib/enum";
 
 export const signInSchema = z.object({
   email: z.string().email("Email không hợp lệ"),
@@ -28,3 +29,27 @@ export const signUpSchema = z
     path: ["confirmPassword"],
   });
 export type SignUpSchemaType = z.infer<typeof signUpSchema>;
+
+export const profileSchema = z.object({
+  email: z.string().email("Email không hợp lệ"),
+  firstName: z.string().min(1, "Vui lòng nhập tên"),
+  lastName: z.string().min(1, "Vui lòng nhập họ"),
+  avatar: z.string().nullable(),
+  createdAt: z.date(),
+  preferences: z.object({
+    favoriteTeam: z
+      .nativeEnum(FOOTBALL_TEAMS, {
+        message: "Vui lòng chọn đội yêu thích",
+      })
+      .nullable(),
+  }),
+});
+export type ProfileSchemaType = z.infer<typeof profileSchema>;
+
+export const changePasswordSchema = z.object({
+  currentPassword: z
+    .string()
+    .min(6, "Mật khẩu hiện tại phải có ít nhất 6 ký tự"),
+  newPassword: z.string().min(6, "Mật khẩu mới phải có ít nhất 6 ký tự"),
+});
+export type ChangePasswordSchemaType = z.infer<typeof changePasswordSchema>;

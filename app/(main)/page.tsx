@@ -28,7 +28,7 @@ export default function HomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-green-900/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/90 dark:from-primary/90 dark:to-primary/95" />
         </div>
 
         <div className="container relative z-10 mx-auto px-4">
@@ -36,21 +36,21 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center max-w-3xl mx-auto text-white"
+            className="text-center max-w-3xl mx-auto text-primary-foreground"
           >
             <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">
               AI Football{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400 dark:from-blue-300 dark:to-green-300">
                 Predictor
               </span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8">
+            <p className="text-xl md:text-2xl mb-8 text-primary-foreground/90">
               Dự đoán kết quả bóng đá với độ chính xác cao nhờ trí tuệ nhân tạo
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700"
                 asChild
               >
                 <Link href="/sign-up">Đăng ký ngay</Link>
@@ -58,7 +58,7 @@ export default function HomePage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white text-black hover:bg-white/10"
+                className="bg-background text-primary hover:bg-background/90 dark:bg-primary-foreground dark:text-primary dark:hover:bg-primary-foreground/90"
                 asChild
               >
                 <Link href="/predictions">Xem dự đoán mới nhất</Link>
@@ -81,12 +81,12 @@ export default function HomePage() {
             ].map((stat, i) => (
               <div
                 key={i}
-                className="bg-white/10 backdrop-blur-sm rounded-lg p-4"
+                className="bg-background/10 backdrop-blur-sm rounded-lg p-4"
               >
-                <div className="text-3xl font-bold text-white">
+                <div className="text-3xl font-bold text-primary-foreground">
                   {stat.value}
                 </div>
-                <div className="text-blue-200">{stat.label}</div>
+                <div className="text-primary-foreground/80">{stat.label}</div>
               </div>
             ))}
           </motion.div>
@@ -94,7 +94,7 @@ export default function HomePage() {
       </section>
 
       {/* How it works */}
-      <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-20 bg-gradient-to-b from-background to-background/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -133,11 +133,11 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
+                className="bg-card rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
               >
                 <div className="text-4xl mb-4">{step.icon}</div>
                 <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <p className="text-muted-foreground">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -145,7 +145,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Tabs */}
-      <section className="py-20 bg-slate-50">
+      <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -269,7 +269,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-gradient-to-b from-white to-slate-50">
+      <section className="py-20 bg-gradient-to-b from-background to-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -311,7 +311,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white p-6 rounded-xl shadow-lg"
+                className="bg-card p-6 rounded-xl shadow-lg"
               >
                 <div className="flex items-center mb-4">
                   <Image
@@ -322,10 +322,12 @@ export default function HomePage() {
                   />
                   <div>
                     <h4 className="font-semibold">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {testimonial.role}
+                    </p>
                   </div>
                 </div>
-                <p className="text-gray-600 italic">
+                <p className="text-muted-foreground italic">
                   &ldquo;{testimonial.content}&rdquo;
                 </p>
                 <div className="mt-4 text-yellow-400">★★★★★</div>
@@ -336,7 +338,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-md">
+      <section className="py-20 bg-gradient-to-r from-primary to-primary/90 dark:from-primary/95 dark:to-primary text-primary-foreground rounded-md">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -347,18 +349,18 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Sẵn sàng để dự đoán chính xác hơn?
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
+            <p className="text-xl mb-8 max-w-2xl mx-auto text-primary-foreground/90">
               Đăng ký ngay hôm nay và nhận 7 ngày dùng thử miễn phí với đầy đủ
               tính năng!
             </p>
             <Button
               size="lg"
-              className="bg-white text-blue-700 hover:bg-blue-50"
+              className="bg-background text-primary hover:bg-background/90 dark:bg-primary-foreground dark:text-primary dark:hover:bg-primary-foreground/90"
               asChild
             >
               <Link href="/sign-up">Bắt đầu ngay - Miễn phí</Link>
             </Button>
-            <p className="mt-4 text-sm text-blue-200">
+            <p className="mt-4 text-sm text-primary-foreground/80">
               Không cần thẻ tín dụng. Hủy bất kỳ lúc nào.
             </p>
           </motion.div>
@@ -366,7 +368,7 @@ export default function HomePage() {
       </section>
 
       {/* Fun Football Facts */}
-      <section className="py-16 bg-slate-50">
+      <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="text-2xl font-bold">Những điều thú vị về bóng đá</h2>
@@ -392,7 +394,7 @@ export default function HomePage() {
             ].map((item, i) => (
               <Card
                 key={i}
-                className="p-4 text-center hover:bg-blue-50 transition-colors cursor-pointer"
+                className="p-4 text-center hover:bg-accent transition-colors cursor-pointer"
               >
                 <div className="text-3xl mb-2">{item.icon}</div>
                 <p>{item.fact}</p>
