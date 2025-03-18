@@ -24,6 +24,7 @@ import { updateProfile } from "@/services/auth";
 import { toast } from "react-hot-toast";
 import { profileSchema, ProfileSchemaType } from "@/lib/validation";
 import { ProfileFormProps } from "@/lib/interface";
+import { FOOTBALL_TEAMS } from "@/lib/enum";
 
 export function ProfileForm({ initialData }: ProfileFormProps) {
   const queryClient = useQueryClient();
@@ -34,9 +35,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
       firstName: initialData.firstName || "",
       lastName: initialData.lastName || "",
       avatar: initialData.avatar || null,
-      preferences: {
-        favoriteTeam: initialData.preferences?.favoriteTeam || null,
-      },
+      favoriteTeam: initialData.favoriteTeam || null,
     },
   });
 
@@ -90,7 +89,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
-            name="preferences.favoriteTeam"
+            name="favoriteTeam"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Đội yêu thích</FormLabel>
@@ -104,12 +103,11 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="manutd">Manchester United</SelectItem>
-                    <SelectItem value="liverpool">Liverpool</SelectItem>
-                    <SelectItem value="arsenal">Arsenal</SelectItem>
-                    <SelectItem value="chelsea">Chelsea</SelectItem>
-                    <SelectItem value="tottenham">Tottenham</SelectItem>
-                    <SelectItem value="city">Manchester City</SelectItem>
+                    {Object.values(FOOTBALL_TEAMS).map((team) => (
+                      <SelectItem key={team} value={team}>
+                        {team}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />

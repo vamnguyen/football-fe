@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getUser } from "@/services/auth";
+import { getMe } from "@/services/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -20,7 +20,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function AccountPage() {
   const { data: user, isLoading } = useQuery<User>({
     queryKey: ["user"],
-    queryFn: getUser,
+    queryFn: getMe,
   });
 
   if (isLoading) {
@@ -98,22 +98,19 @@ export default function AccountPage() {
 
             <CardContent>
               <div className="space-y-4">
-                <div>
-                  <h4 className="text-sm font-medium">Đội yêu thích</h4>
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className="h-8 w-8 rounded-full bg-primary" />
-                    <span>
-                      {user?.preferences?.favoriteTeam || "Chưa chọn"}
-                    </span>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-medium">Đội yêu thích:</h4>
+                  <span className="text-sm text-muted-foreground">
+                    {user?.favoriteTeam || "Chưa chọn"}
+                  </span>
                 </div>
-                <div>
-                  <h4 className="text-sm font-medium">Thành viên từ</h4>
-                  <p className="text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-medium">Thành viên từ:</h4>
+                  <span className="text-sm text-muted-foreground">
                     {new Date(user?.createdAt || "").toLocaleDateString(
                       "vi-VN"
                     )}
-                  </p>
+                  </span>
                 </div>
               </div>
             </CardContent>
