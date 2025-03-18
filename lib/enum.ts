@@ -1,0 +1,17 @@
+export enum FOOTBALL_TEAMS {
+  MAN_UNITED = "Manchester United",
+  MAN_CITY = "Manchester City",
+  LIVERPOOL = "Liverpool",
+  CHELSEA = "Chelsea",
+  ARSENAL = "Arsenal",
+  TOTTENHAM = "Tottenham Hotspur",
+  WEST_HAM = "West Ham United",
+  EVERTON = "Everton",
+  ASTON_VILLA = "Aston Villa",
+  WEST_BROM = "West Bromwich Albion",
+  BIRMINGHAM = "Birmingham City",
+  WIGAN = "Wigan Athletic",
+  BLACKBURN = "Blackburn Rovers",
+  WOLVERHAMPTON = "Wolverhampton Wanderers",
+  NORWICH = "Norwich City",
+}

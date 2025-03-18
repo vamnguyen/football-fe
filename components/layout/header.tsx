@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MainNav } from "@/components/layout/main-nav";
+import { ModeToggle } from "@/components/account/mode-toggle";
 
 export function Header() {
   return (
@@ -13,6 +14,7 @@ export function Header() {
           </Link>
           <MainNav />
         </div>
+        <ModeToggle />
       </div>
     </header>
   );

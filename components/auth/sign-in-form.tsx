@@ -49,7 +49,7 @@ export function SignInForm() {
   };
 
   return (
-    <Card className="w-full shadow-lg backdrop-blur-sm bg-white/70">
+    <Card className="w-full shadow-lg backdrop-blur-sm bg-card/70">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Đăng nhập</CardTitle>
         <CardDescription>
@@ -64,12 +64,12 @@ export function SignInForm() {
               id="email"
               type="email"
               placeholder="your@email.com"
-              className="bg-white/90"
+              className="bg-background/90"
               {...register("email")}
               aria-invalid={errors.email ? "true" : "false"}
             />
             {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
+              <p className="text-sm text-destructive">{errors.email.message}</p>
             )}
           </div>
           <div className="space-y-2">
@@ -86,19 +86,17 @@ export function SignInForm() {
               id="password"
               type="password"
               placeholder="••••••••"
-              className="bg-white/90"
+              className="bg-background/90"
               {...register("password")}
               aria-invalid={errors.password ? "true" : "false"}
             />
             {errors.password && (
-              <p className="text-sm text-red-500">{errors.password.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.password.message}
+              </p>
             )}
           </div>
-          <Button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700"
-            disabled={isSubmitting}
-          >
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
           </Button>
         </form>
@@ -108,14 +106,14 @@ export function SignInForm() {
             <Separator />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white/70 px-2 text-muted-foreground">
+            <span className="bg-card/70 px-2 text-muted-foreground">
               Hoặc đăng nhập với
             </span>
           </div>
         </div>
 
         <div>
-          <Button variant="outline" className="w-full bg-white/90">
+          <Button variant="outline" className="w-full">
             <GoogleIcon />
             <span className="ml-2">Google</span>
           </Button>

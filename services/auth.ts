@@ -22,3 +22,25 @@ export const getMe = async (): Promise<User> => {
   const response = await axiosInstance.get("/auth/me");
   return response.data;
 };
+
+export const getUser = async (): Promise<User> => {
+  const response = await axiosInstance.get("/auth/me");
+  return response.data;
+};
+
+export const updateProfile = async (data: {
+  firstName?: string | null;
+  lastName?: string | null;
+  favoriteTeam?: string | null;
+}) => {
+  const response = await axiosInstance.patch("/auth/profile", data);
+  return response.data;
+};
+
+export const changePassword = async (data: {
+  currentPassword: string;
+  newPassword: string;
+}) => {
+  const response = await axiosInstance.patch("/auth/password", data);
+  return response.data;
+};
