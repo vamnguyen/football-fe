@@ -10,10 +10,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { href: "/", label: "Trang chủ" },
   { href: "/predictions", label: "Dự đoán" },
   { href: "/community", label: "Cộng đồng" },
   { href: "/challenges", label: "Thách đấu" },
+  { href: "/account", label: "Tài khoản" },
 ];
 
 export function MainNav({
@@ -28,9 +28,7 @@ export function MainNav({
       {...props}
     >
       {navItems.map((item) => {
-        const isActive =
-          pathname === item.href ||
-          (item.href !== "/" && pathname.startsWith(item.href));
+        const isActive = pathname.startsWith(item.href);
 
         return (
           <Link

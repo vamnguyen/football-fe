@@ -1,5 +1,6 @@
 import axiosInstance from "@/lib/axiosInstance";
 import { SignInSchemaType, SignUpSchemaType } from "@/lib/validation";
+import { User } from "@/lib/interface";
 
 export const signIn = async (data: SignInSchemaType) => {
   return await axiosInstance.post("/auth/login", data);
@@ -15,4 +16,9 @@ export const logout = async () => {
 
 export const refreshToken = async () => {
   return await axiosInstance.post("/auth/refresh-token");
+};
+
+export const getMe = async (): Promise<User> => {
+  const response = await axiosInstance.get("/auth/me");
+  return response.data;
 };

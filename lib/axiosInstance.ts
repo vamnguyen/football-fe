@@ -1,66 +1,71 @@
-import axios, { AxiosRequestConfig, AxiosError } from "axios";
+import axios from "axios";
 import { refreshToken } from "@/services/auth";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 300000, // 5 minutes
-  headers: {
-    "Content-Type": "application/json",
-  },
   withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    config.headers["Cache-Control"] = "no-cache";
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+let isRefreshing = false;
+let failedQueue: any[] = [];
 
-let refreshTokenPromise: Promise<unknown> | null = null;
+const processQueue = (error: any = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve();
+    }
+  });
+  failedQueue = [];
+};
+
+const publicRoutes = ["/", "/sign-in", "/sign-up"];
+
+const isPublicRoute = () => {
+  const currentPath = window.location.pathname;
+  return publicRoutes.includes(currentPath);
+};
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error: AxiosError) => {
-    if (error.response?.status === 401) {
-      location.href = "/sign-in";
-    }
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-    const originalRequest = error.config as AxiosRequestConfig & {
-      _retry?: boolean;
-    };
-
-    if (error.response?.status === 410 && !originalRequest._retry) {
-      originalRequest._retry = true; // Đánh dấu request này đã được thử retry
-      if (!refreshTokenPromise) {
-        // Tạo promise refresh token nếu chưa có
-        refreshTokenPromise = refreshToken()
-          .then((res) => {
-            // Trích xuất access token mới từ response
-            return res.data?.accessToken;
-          })
-          .catch(() => {
-            // Nếu refresh token thất bại, chuyển hướng về trang login
-            location.href = "/sign-in";
-          })
-          .finally(() => {
-            // Reset promise để lần sau có thể refresh token lại
-            refreshTokenPromise = null;
-          });
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes("/auth/refresh-token")
+    ) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(() => axiosInstance(originalRequest))
+          .catch((err) => Promise.reject(err));
       }
 
-      // Đợi promise refresh token hoàn thành, sau đó retry lại request gốc
-      return refreshTokenPromise.then(() => {
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        await refreshToken();
+        processQueue();
         return axiosInstance(originalRequest);
-      });
+      } catch (refreshError) {
+        processQueue(refreshError);
+
+        if (!isPublicRoute()) {
+          window.location.href = "/sign-in";
+        }
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
+      }
     }
 
     return Promise.reject(error);
   }
 );
+
 export default axiosInstance;

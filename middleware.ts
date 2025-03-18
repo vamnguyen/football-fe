@@ -28,8 +28,8 @@ export function middleware(request: NextRequest) {
 
   // If user is authenticated
   if (isAuthPath) {
-    // Redirect to home page if trying to access auth paths
-    return NextResponse.redirect(new URL(`/`, request.url));
+    // Redirect to account page if trying to access auth paths
+    return NextResponse.redirect(new URL(`/account`, request.url));
   }
 
   // Allow access to protected paths

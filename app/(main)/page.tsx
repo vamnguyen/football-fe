@@ -20,7 +20,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         {/* Background with overlay */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 rounded-md overflow-hidden">
           <Image
             src={stadiumHero}
             alt="Football stadium"
@@ -336,7 +336,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-md">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
