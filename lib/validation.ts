@@ -35,14 +35,11 @@ export const profileSchema = z.object({
   firstName: z.string().min(1, "Vui lòng nhập tên"),
   lastName: z.string().min(1, "Vui lòng nhập họ"),
   avatar: z.string().nullable(),
-  createdAt: z.date(),
-  preferences: z.object({
-    favoriteTeam: z
-      .nativeEnum(FOOTBALL_TEAMS, {
-        message: "Vui lòng chọn đội yêu thích",
-      })
-      .nullable(),
-  }),
+  favoriteTeam: z
+    .nativeEnum(FOOTBALL_TEAMS, {
+      message: "Vui lòng chọn đội yêu thích",
+    })
+    .nullable(),
 });
 export type ProfileSchemaType = z.infer<typeof profileSchema>;
 

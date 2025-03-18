@@ -23,11 +23,6 @@ export const getMe = async (): Promise<User> => {
   return response.data;
 };
 
-export const getUser = async (): Promise<User> => {
-  const response = await axiosInstance.get("/auth/me");
-  return response.data;
-};
-
 export const updateProfile = async (data: {
   firstName?: string | null;
   lastName?: string | null;

@@ -4,17 +4,13 @@ export interface ProfileFormProps {
   initialData: User;
 }
 
-export interface UserPreferences {
-  favoriteTeam: FOOTBALL_TEAMS | null;
-}
-
 export interface User {
   id: string;
   email: string;
   firstName: string;
   lastName: string;
   avatar: string | null;
-  preferences: UserPreferences;
+  favoriteTeam: FOOTBALL_TEAMS;
   createdAt: Date;
 }
 
