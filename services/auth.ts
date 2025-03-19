@@ -23,19 +23,10 @@ export const getMe = async (): Promise<User> => {
   return response.data;
 };
 
-export const updateProfile = async (data: {
-  firstName?: string | null;
-  lastName?: string | null;
-  favoriteTeam?: string | null;
-}) => {
-  const response = await axiosInstance.patch("/auth/profile", data);
-  return response.data;
-};
-
 export const changePassword = async (data: {
   currentPassword: string;
   newPassword: string;
 }) => {
-  const response = await axiosInstance.patch("/auth/password", data);
+  const response = await axiosInstance.put("/auth/change-password", data);
   return response.data;
 };

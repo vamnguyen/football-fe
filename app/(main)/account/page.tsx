@@ -1,7 +1,5 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { getMe } from "@/services/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -14,14 +12,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProfileForm } from "@/components/account/profile-form";
 import { ChangePasswordForm } from "@/components/account/change-password-form";
 import { landingAvatar2 } from "@/assets/images";
-import { User } from "@/lib/interface";
 import { Skeleton } from "@/components/ui/skeleton";
+import useGetMe from "@/hooks/auth/use-get-me";
 
 export default function AccountPage() {
-  const { data: user, isLoading } = useQuery<User>({
-    queryKey: ["user"],
-    queryFn: getMe,
-  });
+  const { data: user, isLoading } = useGetMe();
 
   if (isLoading) {
     return (
@@ -80,14 +75,14 @@ export default function AccountPage() {
           {/* Profile Card */}
           <Card className="md:col-span-1">
             <CardHeader>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center gap-2">
                 <Avatar className="h-24 w-24">
                   <AvatarImage src={landingAvatar2.src} alt="User" />
                   <AvatarFallback>
                     {user?.firstName?.[0]?.toUpperCase() || "U"}
                   </AvatarFallback>
                 </Avatar>
-                <CardTitle className="mt-4">
+                <CardTitle>
                   {user?.firstName && user?.lastName
                     ? `${user.firstName} ${user.lastName}`
                     : "Chưa cập nhật"}

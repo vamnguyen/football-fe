@@ -7,7 +7,7 @@ export default function SignUpPage() {
       <div className="grid w-full max-w-[900px] grid-cols-1 md:grid-cols-2 gap-8">
         <SignUpForm />
 
-        <div className="hidden md:flex flex-col justify-center items-center bg-gradient-to-br from-primary/80 to-primary/90 backdrop-blur-sm rounded-lg p-8 text-primary-foreground shadow-lg">
+        <div className="hidden md:flex flex-col justify-center items-center bg-gradient-to-br from-primary/20 to-primary/30 backdrop-blur-sm rounded-lg p-8 text-primary-foreground shadow-lg">
           <div className="mb-4">
             <Globe className="w-20 h-20" />
           </div>

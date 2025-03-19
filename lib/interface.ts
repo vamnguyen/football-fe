@@ -1,7 +1,7 @@
 import { FOOTBALL_TEAMS } from "@/lib/enum";
 
 export interface ProfileFormProps {
-  initialData: User;
+  initialData: Pick<User, "firstName" | "lastName" | "favoriteTeam">;
 }
 
 export interface User {
@@ -10,7 +10,7 @@ export interface User {
   firstName: string;
   lastName: string;
   avatar: string | null;
-  favoriteTeam: FOOTBALL_TEAMS;
+  favoriteTeam: FOOTBALL_TEAMS | null;
   createdAt: Date;
 }
 

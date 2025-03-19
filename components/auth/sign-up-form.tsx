@@ -54,10 +54,10 @@ export function SignUpForm() {
   };
 
   return (
-    <Card className="w-full shadow-lg backdrop-blur-sm bg-white/70">
+    <Card className="w-full text-secondary shadow-lg backdrop-blur-sm bg-white/70">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Đăng ký</CardTitle>
-        <CardDescription>
+        <CardDescription className="text-secondary">
           Tạo tài khoản để tham gia FootPred Community
         </CardDescription>
       </CardHeader>
@@ -157,11 +157,11 @@ export function SignUpForm() {
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Tôi đồng ý với{" "}
-              <Link href="/terms" className="text-primary hover:underline">
+              <Link href="/terms" className="text-secondary hover:underline">
                 Điều khoản
               </Link>{" "}
               và{" "}
-              <Link href="/privacy" className="text-primary hover:underline">
+              <Link href="/privacy" className="text-secondary hover:underline">
                 Chính sách bảo mật
               </Link>
             </label>
@@ -183,7 +183,7 @@ export function SignUpForm() {
             <Separator />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white/70 px-2 text-muted-foreground">
+            <span className="bg-white rounded-sm px-2 text-secondary">
               Hoặc đăng ký với
             </span>
           </div>
@@ -197,9 +197,12 @@ export function SignUpForm() {
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-secondary">
           Đã có tài khoản?{" "}
-          <Link href="/sign-in" className="text-primary hover:underline">
+          <Link
+            href="/sign-in"
+            className="text-secondary font-bold hover:underline"
+          >
             Đăng nhập
           </Link>
         </div>
