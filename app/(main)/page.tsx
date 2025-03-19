@@ -28,7 +28,7 @@ export default function HomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/90 dark:from-primary/90 dark:to-primary/95" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/40 to-primary/50 dark:from-primary/20 dark:to-primary/30" />
         </div>
 
         <div className="container relative z-10 mx-auto px-4">

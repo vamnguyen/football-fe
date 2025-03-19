@@ -31,10 +31,8 @@ export const signUpSchema = z
 export type SignUpSchemaType = z.infer<typeof signUpSchema>;
 
 export const profileSchema = z.object({
-  email: z.string().email("Email không hợp lệ"),
   firstName: z.string().min(1, "Vui lòng nhập tên"),
   lastName: z.string().min(1, "Vui lòng nhập họ"),
-  avatar: z.string().nullable(),
   favoriteTeam: z
     .nativeEnum(FOOTBALL_TEAMS, {
       message: "Vui lòng chọn đội yêu thích",

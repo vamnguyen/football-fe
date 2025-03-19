@@ -19,36 +19,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateProfile } from "@/services/auth";
-import { toast } from "react-hot-toast";
 import { profileSchema, ProfileSchemaType } from "@/lib/validation";
 import { ProfileFormProps } from "@/lib/interface";
 import { FOOTBALL_TEAMS } from "@/lib/enum";
+import useUpdateProfile from "@/hooks/user/use-update-profile";
 
 export function ProfileForm({ initialData }: ProfileFormProps) {
-  const queryClient = useQueryClient();
-
   const form = useForm<ProfileSchemaType>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       firstName: initialData.firstName || "",
       lastName: initialData.lastName || "",
-      avatar: initialData.avatar || null,
       favoriteTeam: initialData.favoriteTeam || null,
     },
   });
-
-  const { mutate: updateProfileMutation, isPending } = useMutation({
-    mutationFn: updateProfile,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      toast.success("Cập nhật thông tin thành công");
-    },
-    onError: () => {
-      toast.error("Có lỗi xảy ra khi cập nhật thông tin");
-    },
-  });
+  const { mutate: updateProfileMutation, isPending } = useUpdateProfile();
 
   function onSubmit(values: ProfileSchemaType) {
     updateProfileMutation(values);
