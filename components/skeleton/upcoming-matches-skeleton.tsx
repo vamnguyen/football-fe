@@ -25,6 +25,11 @@ export default function UpcomingMatchesSkeleton() {
           </Card>
         ))}
       </div>
+      <div className="flex justify-center mt-4 gap-2">
+        <Skeleton className="h-8 w-24" />
+        <Skeleton className="h-8 w-24" />
+        <Skeleton className="h-8 w-24" />
+      </div>
     </div>
   );
 }
