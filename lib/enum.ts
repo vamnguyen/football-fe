@@ -1,4 +1,5 @@
 export enum FOOTBALL_TEAMS {
+  // Premier League
   MAN_UNITED = "Manchester United",
   MAN_CITY = "Manchester City",
   LIVERPOOL = "Liverpool",
@@ -8,10 +9,40 @@ export enum FOOTBALL_TEAMS {
   WEST_HAM = "West Ham United",
   EVERTON = "Everton",
   ASTON_VILLA = "Aston Villa",
-  WEST_BROM = "West Bromwich Albion",
-  BIRMINGHAM = "Birmingham City",
-  WIGAN = "Wigan Athletic",
-  BLACKBURN = "Blackburn Rovers",
   WOLVERHAMPTON = "Wolverhampton Wanderers",
-  NORWICH = "Norwich City",
+  // La Liga
+  REAL_MADRID = "Real Madrid",
+  BARCELONA = "Barcelona",
+  ATLETICO_MADRID = "Atletico Madrid",
+  // Bundesliga
+  BAYERN_MUNICH = "Bayern Munich",
+  BORUSSIA_DORTMUND = "Borussia Dortmund",
+  // Serie A
+  JUVENTUS = "Juventus",
+  AC_MILAN = "AC Milan",
+  INTER_MILAN = "Inter Milan",
+  NAPOLI = "Napoli",
+  // National teams
+  VIETNAM = "Vietnam",
+  THAILAND = "Thailand",
+  CAMBODIA = "Cambodia",
+  LAOS = "Laos",
+  PHILIPPINES = "Philippines",
+  MALAYSIA = "Malaysia",
+  INDONESIA = "Indonesia",
+  SINGAPORE = "Singapore",
+  MYANMAR = "Myanmar",
+  BRUNEI = "Brunei",
+}
+
+export enum LEAGUES {
+  ALL = "All",
+  PREMIER_LEAGUE = "Premier League",
+  LA_LIGA = "La Liga",
+  BUNDESLIGA = "Bundesliga",
+  SERIE_A = "Serie A",
+  AFF_CUP = "AFF Cup",
+  WORLD_CUP = "World Cup",
+  ASIAN_CUP = "Asian Cup",
+  SEA_GAMES = "SEA Games",
 }

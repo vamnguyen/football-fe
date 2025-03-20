@@ -12,62 +12,39 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProfileForm } from "@/components/account/profile-form";
 import { ChangePasswordForm } from "@/components/account/change-password-form";
 import { landingAvatar2 } from "@/assets/images";
-import { Skeleton } from "@/components/ui/skeleton";
-import useGetMe from "@/hooks/auth/use-get-me";
+import { useGetMe, useLogout } from "@/hooks/auth";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
+import AccountPageSkeleton from "@/components/skeleton/account-page-skeleton";
 
 export default function AccountPage() {
   const { data: user, isLoading } = useGetMe();
+  const { mutate: logout, isPending } = useLogout();
 
   if (isLoading) {
-    return (
-      <div className="py-6">
-        <div className="flex flex-col gap-6">
-          <div>
-            <Skeleton className="h-8 w-48" />
-            <Skeleton className="h-4 w-96 mt-2" />
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            <Card className="md:col-span-1">
-              <CardHeader>
-                <div className="flex flex-col items-center">
-                  <Skeleton className="h-24 w-24 rounded-full" />
-                  <Skeleton className="h-6 w-32 mt-4" />
-                  <Skeleton className="h-4 w-48 mt-2" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-8 w-full mb-4" />
-                <Skeleton className="h-8 w-full" />
-              </CardContent>
-            </Card>
-            <div className="md:col-span-2 space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Thông tin cá nhân</CardTitle>
-                  <CardDescription>
-                    Cập nhật thông tin tài khoản của bạn
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-32 w-full" />
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <AccountPageSkeleton />;
   }
 
   return (
     <div className="py-6">
       <div className="flex flex-col gap-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">Tài khoản</h1>
-          <p className="text-muted-foreground">
-            Quản lý thông tin tài khoản và hoạt động của bạn
-          </p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold">Tài khoản</h1>
+            <p className="text-muted-foreground">
+              Quản lý thông tin tài khoản và hoạt động của bạn
+            </p>
+          </div>
+          <Button
+            variant="destructive"
+            onClick={() => logout()}
+            disabled={isPending}
+            className="flex items-center gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Đăng xuất
+          </Button>
         </div>
 
         {/* Main Content */}
