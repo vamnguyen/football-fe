@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MainNav } from "@/components/layout/main-nav";
+import { MainNav } from "@/components/shared/main-nav";
 import { ModeToggle } from "@/components/account/mode-toggle";
 
 export function Header() {

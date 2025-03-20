@@ -1,4 +1,4 @@
-import { FOOTBALL_TEAMS } from "@/lib/enum";
+import { FOOTBALL_TEAMS, LEAGUES } from "@/lib/enum";
 
 export interface ProfileFormProps {
   initialData: Pick<User, "firstName" | "lastName" | "favoriteTeam">;
@@ -17,4 +17,20 @@ export interface User {
 export interface ChangePasswordFormProps {
   currentPassword: string;
   newPassword: string;
+}
+
+export interface Match {
+  id: string;
+  homeTeam: string;
+  awayTeam: string;
+  matchDate: string;
+  league: LEAGUES;
+}
+
+export interface Prediction {
+  id: string;
+  prediction: string;
+  confidence: number;
+  match: Match;
+  createdAt: string;
 }
