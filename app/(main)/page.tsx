@@ -317,8 +317,9 @@ export default function HomePage() {
                   <Image
                     src={testimonial.avatar}
                     alt={testimonial.name}
-                    width={50}
                     className="rounded-full mr-4 aspect-square object-cover"
+                    width={50}
+                    height={50}
                   />
                   <div>
                     <h4 className="font-semibold">{testimonial.name}</h4>

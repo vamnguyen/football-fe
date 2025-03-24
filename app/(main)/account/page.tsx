@@ -11,7 +11,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProfileForm } from "@/components/account/profile-form";
 import { ChangePasswordForm } from "@/components/account/change-password-form";
-import { landingAvatar2 } from "@/assets/images";
 import { useGetMe, useLogout } from "@/hooks/auth";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
@@ -54,10 +53,11 @@ export default function AccountPage() {
             <CardHeader>
               <div className="flex flex-col items-center gap-2">
                 <Avatar className="h-24 w-24">
-                  <AvatarImage src={landingAvatar2.src} alt="User" />
-                  <AvatarFallback>
-                    {user?.firstName?.[0]?.toUpperCase() || "U"}
-                  </AvatarFallback>
+                  <AvatarImage
+                    src={user?.avatar ?? undefined}
+                    alt="user avatar"
+                  />
+                  <AvatarFallback>{user?.firstName.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <CardTitle>
                   {user?.firstName && user?.lastName
@@ -70,12 +70,6 @@ export default function AccountPage() {
 
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-medium">Đội yêu thích:</h4>
-                  <span className="text-sm text-muted-foreground">
-                    {user?.favoriteTeam || "Chưa chọn"}
-                  </span>
-                </div>
                 <div className="flex items-center gap-2">
                   <h4 className="text-sm font-medium">Thành viên từ:</h4>
                   <span className="text-sm text-muted-foreground">

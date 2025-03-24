@@ -1,35 +1,40 @@
 import axiosInstance from "@/lib/axiosInstance";
-import { Match, PaginatedResponse, Prediction } from "@/lib/interface";
-import {
-  getUpcomingMatchesParams,
-  getUserPredictionsParams,
-} from "@/lib/types";
+import { PaginatedResponse, Prediction } from "@/lib/interface";
+import { UserCreatePredictionBody } from "@/lib/types";
+import { PaginationParams } from "@/lib/types";
 
-export const getUpcomingMatches = async (
-  params: getUpcomingMatchesParams
-): Promise<PaginatedResponse<Match>> => {
-  const response = await axiosInstance.get("/predictions/matches", {
-    params,
-  });
-  return response.data;
-};
-
-export const getUserPredictions = async (
-  params: getUserPredictionsParams
-): Promise<PaginatedResponse<Prediction>> => {
-  const response = await axiosInstance.get("/predictions/my-predictions", {
-    params,
-  });
-  return response.data;
-};
-
-export const createPrediction = async (
+export const createUserPrediction = async (
   matchId: string,
-  additionalContext?: string
-) => {
-  const response = await axiosInstance.post("/predictions/predict", {
-    matchId,
-    additionalContext,
-  });
+  body: UserCreatePredictionBody
+): Promise<Prediction> => {
+  const response = await axiosInstance.post(
+    `/predictions/user-prediction/${matchId}`,
+    body
+  );
+  return response.data;
+};
+
+export const getUserPrediction = async (matchId: string) => {
+  const response = await axiosInstance.get(
+    `/predictions/my-prediction/${matchId}`
+  );
+  return response.data;
+};
+
+export const getAIPrediction = async (matchId: string) => {
+  const response = await axiosInstance.get(
+    `/predictions/ai-prediction/${matchId}`
+  );
+  return response.data;
+};
+
+export const getCommunityPredictions = async (
+  matchId: string,
+  paginationParams: PaginationParams
+): Promise<PaginatedResponse<Prediction>> => {
+  const response = await axiosInstance.get(
+    `/predictions/community/${matchId}`,
+    { params: paginationParams }
+  );
   return response.data;
 };

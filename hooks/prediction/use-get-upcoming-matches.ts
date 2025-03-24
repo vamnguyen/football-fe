@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUpcomingMatches } from "@/services/prediction";
+import { getUpcomingMatches } from "@/services/match";
 import { getUpcomingMatchesParams } from "@/lib/types";
 
 export default function useGetUpcomingMatches(

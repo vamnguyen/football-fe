@@ -1,4 +1,4 @@
-import { LEAGUES } from "./enum";
+import { SPORTS } from "./enum";
 
 export type PaginationParams = {
   page?: number;
@@ -6,7 +6,11 @@ export type PaginationParams = {
 };
 
 export type getUpcomingMatchesParams = PaginationParams & {
-  league?: LEAGUES;
+  leagueId?: string;
+  sport: SPORTS;
 };
 
-export type getUserPredictionsParams = PaginationParams;
+export type UserCreatePredictionBody = {
+  result: string;
+  explanation: string;
+};
