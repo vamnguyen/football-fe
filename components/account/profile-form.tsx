@@ -12,16 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { profileSchema, ProfileSchemaType } from "@/lib/validation";
 import { ProfileFormProps } from "@/lib/interface";
-import { FOOTBALL_TEAMS } from "@/lib/enum";
 import useUpdateProfile from "@/hooks/user/use-update-profile";
 
 export function ProfileForm({ initialData }: ProfileFormProps) {
@@ -30,7 +22,6 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
     defaultValues: {
       firstName: initialData.firstName || "",
       lastName: initialData.lastName || "",
-      favoriteTeam: initialData.favoriteTeam || null,
     },
   });
   const { mutate: updateProfileMutation, isPending } = useUpdateProfile();
@@ -65,36 +56,6 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
                 <FormControl>
                   <Input placeholder="Nhập họ" {...field} />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="favoriteTeam"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Đội yêu thích</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value || ""}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Chọn đội" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {Object.values(FOOTBALL_TEAMS).map((team) => (
-                      <SelectItem key={team} value={team}>
-                        {team}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
                 <FormMessage />
               </FormItem>
             )}

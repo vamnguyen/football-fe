@@ -45,4 +45,17 @@ export enum LEAGUES {
   WORLD_CUP = "World Cup",
   ASIAN_CUP = "Asian Cup",
   SEA_GAMES = "SEA Games",
+  LCK = "LCK",
+  LPL = "LPL",
+  VCS = "VCS",
+}
+
+export enum SPORTS {
+  FOOTBALL = "Football",
+  ESPORTS = "Esports",
+}
+
+export enum PREDICTION_TYPE {
+  USER = "User",
+  AI = "AI",
 }

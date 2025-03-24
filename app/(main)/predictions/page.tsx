@@ -1,4 +1,4 @@
-import { PredictionsClient } from "@/components/predictions/PredictionsClient";
+import { UpcomingMatches } from "@/components/predictions/upcoming-matches";
 
 export default function PredictionsPage() {
   return (
@@ -6,7 +6,7 @@ export default function PredictionsPage() {
       <h1 className="text-3xl font-bold mb-8 text-center">
         💩 Dự đoán trận đấu cùng AI 🤖
       </h1>
-      <PredictionsClient />
+      <UpcomingMatches />
     </div>
   );
 }

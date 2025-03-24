@@ -1,4 +1,3 @@
-import { StaticImageData } from "next/image";
 import { FOOTBALL_TEAMS } from "./enum";
 import {
   manCity,
@@ -31,11 +30,7 @@ import {
   myanmar,
   brunei,
 } from "@/assets/logo-club/index";
-
-export interface FootballTeam {
-  name: FOOTBALL_TEAMS;
-  logo: string | StaticImageData;
-}
+import { FootballTeam } from "./interface";
 
 export type FootballTeamsMap = Record<FOOTBALL_TEAMS, FootballTeam>;
 
@@ -167,4 +162,4 @@ export const footballTeams: FootballTeamsMap = {
   },
 };
 
-export const footballTeamsArray = Object.values(footballTeams);
+export const COLORS_CHART_PREDICTION = ["#22c55e", "#eab308", "#ef4444"];

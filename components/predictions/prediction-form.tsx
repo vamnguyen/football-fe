@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
@@ -25,7 +23,7 @@ export function PredictionForm({
       <div className="text-sm text-gray-600 text-center">
         <p className="mb-2">
           <span className="font-medium">Giải đấu:</span>{" "}
-          {match.league ?? "Chưa xác định"}
+          {match.league?.name ?? "Chưa xác định"}
         </p>
         <p>
           <span className="font-medium">Ngày thi đấu:</span>{" "}

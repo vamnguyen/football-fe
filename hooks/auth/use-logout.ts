@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/services/auth";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 export default function useLogout() {
   const router = useRouter();

@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { changePassword } from "@/services/auth";
 import {
