@@ -59,3 +59,8 @@ export enum PREDICTION_TYPE {
   USER = "User",
   AI = "AI",
 }
+
+export enum ROLE {
+  USER = "user",
+  ADMIN = "admin",
+}

@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { FOOTBALL_TEAMS, PREDICTION_TYPE, SPORTS } from "@/lib/enum";
+import { FOOTBALL_TEAMS, PREDICTION_TYPE, ROLE, SPORTS } from "@/lib/enum";
 
 export interface ProfileFormProps {
   initialData: Pick<User, "firstName" | "lastName">;
@@ -11,7 +11,9 @@ export interface User {
   firstName: string;
   lastName: string;
   avatar: string | null;
+  role: ROLE;
   createdAt: Date;
+  isOnline: boolean;
 }
 
 export interface ChangePasswordFormProps {
@@ -24,6 +26,7 @@ export interface PaginatedResponse<T> {
   total: number;
   page: number;
   limit: number;
+  totalPages: number;
 }
 
 export interface FootballTeam {
@@ -70,7 +73,7 @@ export interface Prediction {
     awayWin: number;
   };
   match: Match;
-  createdAt: string;
+  createdAt: Date;
   user: User;
 }
 
@@ -78,4 +81,34 @@ export interface AIPredictionChartData {
   name: string;
   value: number;
   color: string;
+}
+
+export interface MessageAttachment {
+  id: string;
+  url: string;
+  mimetype: string;
+}
+
+export interface Message {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  isDeleted: boolean;
+  content: string;
+  isEdited: boolean;
+  author: User;
+  parentMessage: Message;
+  replies: Message[];
+  attachments: MessageAttachment[];
+}
+
+export interface ChatRoom {
+  id: string;
+  createdAt: Date;
+  name: string;
+  description: string;
+  match: Match;
+  messages: Message[];
+  admin: User;
+  users: User[];
 }
