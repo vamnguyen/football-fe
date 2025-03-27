@@ -1,4 +1,5 @@
 import { SPORTS } from "./enum";
+import { MessageAttachment } from "./interface";
 
 export type PaginationParams = {
   page?: number;
@@ -13,4 +14,15 @@ export type getUpcomingMatchesParams = PaginationParams & {
 export type UserCreatePredictionBody = {
   result: string;
   explanation: string;
+};
+
+export type CreateRoomParams = {
+  name: string;
+  description?: string;
+};
+
+export type CreateMessageParams = {
+  content?: string;
+  parentMessageId?: string;
+  attachments?: MessageAttachment[];
 };
