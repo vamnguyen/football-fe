@@ -64,3 +64,8 @@ export enum ROLE {
   USER = "user",
   ADMIN = "admin",
 }
+
+export enum FILE_TYPE {
+  AVATAR = "avatar",
+  MESSAGE = "message",
+}
