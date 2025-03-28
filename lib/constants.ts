@@ -32,6 +32,8 @@ import {
 } from "@/assets/logo-club/index";
 import { FootballTeam } from "./interface";
 
+export const TIME_THRESHOLD = 15;
+
 export type FootballTeamsMap = Record<FOOTBALL_TEAMS, FootballTeam>;
 
 export const footballTeams: FootballTeamsMap = {

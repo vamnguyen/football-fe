@@ -85,6 +85,7 @@ export interface AIPredictionChartData {
 
 export interface MessageAttachment {
   id: string;
+  key: string;
   url: string;
   mimetype: string;
 }
