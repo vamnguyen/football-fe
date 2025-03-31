@@ -34,12 +34,7 @@ export const RoomHeader = ({ room, activeParticipants }: RoomHeaderProps) => {
             {room.match.matchTime}
           </CardDescription>
         </div>
-        <Badge variant="outline">
-          {activeParticipants !== undefined
-            ? activeParticipants
-            : room.users.length}{" "}
-          người tham gia
-        </Badge>
+        <Badge variant="outline">{activeParticipants} người tham gia</Badge>
       </div>
     </CardHeader>
   );

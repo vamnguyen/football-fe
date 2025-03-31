@@ -71,9 +71,9 @@ export const MessageItem = ({ group, user }: MessageItemProps) => {
                   : "ml-2"
               )}
             >
-              {message.content !== "" && (
+              {message.content && (
                 <>
-                  {message.parentMessage !== null ? (
+                  {message.parentMessage ? (
                     <div
                       className={cn(
                         "flex flex-col relative",
@@ -122,7 +122,7 @@ export const MessageItem = ({ group, user }: MessageItemProps) => {
                           </span>
                         )}
                       </span>
-                      {message.parentMessage.content !== "" ? (
+                      {message.parentMessage.content ? (
                         <div
                           className={cn(
                             "max-w-[350px] opacity-50 bg-muted text-muted-foreground px-4 pb-3 pt-2 w-fit rounded-t-2xl truncate -mb-3",
@@ -228,7 +228,7 @@ export const MessageItem = ({ group, user }: MessageItemProps) => {
               )}
               {message.attachments.length > 0 && (
                 <>
-                  {message.parentMessage !== null ? (
+                  {message.parentMessage ? (
                     <div
                       className={cn(
                         "flex flex-col relative",
@@ -277,7 +277,7 @@ export const MessageItem = ({ group, user }: MessageItemProps) => {
                           </span>
                         )}
                       </span>
-                      {message.parentMessage.content !== "" ? (
+                      {message.parentMessage.content ? (
                         <div
                           className={cn(
                             "max-w-[350px] opacity-50 bg-muted text-muted-foreground px-4 pb-3 pt-2 w-fit rounded-t-2xl truncate -mb-3",

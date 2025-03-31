@@ -51,6 +51,7 @@ interface MessageEditorProps {
     isEditing: boolean;
     message: Message | null;
   }) => void;
+  sendTypingStatus: () => void;
 }
 
 export const MessageEditor = ({
@@ -59,6 +60,7 @@ export const MessageEditor = ({
   setReplyingState,
   editingState,
   setEditingState,
+  sendTypingStatus,
 }: MessageEditorProps) => {
   const { data: me } = useGetMe();
   const [mounted, setMounted] = useState(false);
@@ -367,7 +369,10 @@ export const MessageEditor = ({
             <Textarea
               ref={textareaRef}
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => {
+                setContent(e.target.value);
+                sendTypingStatus();
+              }}
               onKeyDown={handleKeyDown}
               onInput={handleInput}
               placeholder="Nhập tin nhắn..."

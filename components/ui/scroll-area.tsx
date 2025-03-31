@@ -15,10 +15,17 @@ const ScrollArea = React.forwardRef<
 
   React.useEffect(() => {
     if (scrollToBottom && viewportRef.current) {
-      viewportRef.current.scrollTo({
-        top: viewportRef.current.scrollHeight,
-        behavior: "smooth",
-      });
+      // Add a small delay to ensure content is rendered
+      const timeoutId = setTimeout(() => {
+        if (viewportRef.current) {
+          viewportRef.current.scrollTo({
+            top: viewportRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
     }
   }, [scrollToBottom, children]);
 
@@ -28,7 +35,10 @@ const ScrollArea = React.forwardRef<
       className={cn("relative overflow-hidden", className)}
       {...props}
     >
-      <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
+      <ScrollAreaPrimitive.Viewport
+        ref={viewportRef}
+        className="h-full w-full rounded-[inherit]"
+      >
         {children}
       </ScrollAreaPrimitive.Viewport>
       <ScrollBar />

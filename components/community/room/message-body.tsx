@@ -2,13 +2,22 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Message, User } from "@/lib/interface";
 import { format } from "date-fns";
 import { MessageItem } from "@/components/community/room/message-item";
+import MessageTyping from "./message-typing";
 
 interface MessageBodyProps {
   messages: Message[];
   user?: User;
+  participantTyping: {
+    isTyping: boolean;
+    user: User;
+  };
 }
 
-export const MessageBody = ({ messages, user }: MessageBodyProps) => {
+export const MessageBody = ({
+  messages,
+  user,
+  participantTyping,
+}: MessageBodyProps) => {
   const groupMessagesByDate = messages.reduce((groups, message) => {
     if (!message) return groups;
 
@@ -28,7 +37,9 @@ export const MessageBody = ({ messages, user }: MessageBodyProps) => {
       {Object.entries(groupMessagesByDate).map(([dateKey, group]) => (
         <MessageItem group={group} key={dateKey} user={user} />
       ))}
-      {/* {isRecipientTyping && <MessageTyping user={user} />} */}
+      {participantTyping.isTyping && (
+        <MessageTyping user={participantTyping.user} />
+      )}
     </ScrollArea>
   );
 };
