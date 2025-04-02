@@ -12,30 +12,26 @@ export const RoomHeader = ({ room, activeParticipants }: RoomHeaderProps) => {
   if (!room) return null;
 
   return (
-    <CardHeader>
-      <div className="flex items-center justify-between">
-        <div className="space-y-2">
-          <CardTitle className="flex items-center gap-2">
-            <TeamLogo
-              teamName={room.match.homeTeam || ""}
-              size="lg"
-              showName={false}
-            />
-            <span>vs</span>
-            <TeamLogo
-              teamName={room.match.awayTeam || ""}
-              size="lg"
-              showName={false}
-            />
-          </CardTitle>
-          <CardDescription>
-            {room.match.league.name} -{" "}
-            {new Date(room.match.matchDate || "").toLocaleDateString("vi-VN")}{" "}
-            {room.match.matchTime}
-          </CardDescription>
-        </div>
-        <Badge variant="outline">{activeParticipants} người tham gia</Badge>
-      </div>
+    <CardHeader className="flex-row items-center justify-between">
+      <CardDescription>
+        {room.match.league.name} <br />
+        {new Date(room.match.matchDate || "").toLocaleDateString("vi-VN")}{" "}
+        {room.match.matchTime}
+      </CardDescription>
+      <CardTitle className="flex items-center gap-2">
+        <TeamLogo
+          teamName={room.match.homeTeam || ""}
+          size="lg"
+          showName={true}
+        />
+        <span>vs</span>
+        <TeamLogo
+          teamName={room.match.awayTeam || ""}
+          size="lg"
+          showName={true}
+        />
+      </CardTitle>
+      <Badge variant="outline">{activeParticipants} người đang tham gia</Badge>
     </CardHeader>
   );
 };

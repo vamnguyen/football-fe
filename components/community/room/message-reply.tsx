@@ -36,12 +36,12 @@ export const MessageReply = ({
   };
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between bg-primary/10 rounded-lg p-2">
       <div className="flex items-start flex-col">
         <p className="text-base">
-          Replying to{" "}
+          Trả lời{" "}
           {replyingMessage.author.id === user?.id
-            ? "yourself"
+            ? "chính mình"
             : `${replyingMessage.author.firstName} ${replyingMessage.author.lastName}`}
         </p>
         <p className="text-sm text-foreground/70">

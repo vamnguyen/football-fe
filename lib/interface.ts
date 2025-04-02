@@ -101,6 +101,7 @@ export interface Message {
   parentMessage: Message;
   replies: Message[];
   attachments: MessageAttachment[];
+  chatRoomId: string;
 }
 
 export interface ChatRoom {

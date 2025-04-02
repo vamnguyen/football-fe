@@ -16,6 +16,8 @@ import { Link } from "lucide-react";
 import { useOnClickOutside } from "usehooks-ts";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
+import { Theme as EmojiTheme } from "emoji-picker-react";
 
 import { Button } from "@/components/ui/button";
 import { MessageAttachment, Message } from "@/lib/interface";
@@ -27,6 +29,7 @@ import { useUploadFiles } from "@/hooks/files/use-upload-files";
 import { FILE_TYPE } from "@/lib/enum";
 import Hint from "@/components/shared/hint";
 import { cn } from "@/lib/utils";
+import { useEditMessage } from "@/hooks/messages/use-edit-message";
 
 // Dynamically import EmojiPicker with no SSR
 const DynamicEmojiPicker = dynamic(() => import("emoji-picker-react"), {
@@ -62,6 +65,7 @@ export const MessageEditor = ({
   setEditingState,
   sendTypingStatus,
 }: MessageEditorProps) => {
+  const { theme } = useTheme();
   const { data: me } = useGetMe();
   const [mounted, setMounted] = useState(false);
   const [content, setContent] = useState("");
@@ -73,6 +77,7 @@ export const MessageEditor = ({
   const { message: editingMessage, isEditing } = editingState;
   const { mutate: createMessage, isPending: isCreatingMessage } =
     useCreateMessage();
+  const { mutate: editMessage, isPending: isEditingMessage } = useEditMessage();
   const { mutate: uploadFiles, isPending: isUploadingFiles } = useUploadFiles();
 
   useEffect(() => {
@@ -192,28 +197,51 @@ export const MessageEditor = ({
       return;
     }
 
-    createMessage(
-      {
-        roomId,
-        createMessageParams: {
+    if (isEditing && editingMessage) {
+      editMessage(
+        {
+          roomId,
+          messageId: editingMessage.id,
           content,
-          attachments,
-          parentMessageId:
-            isReplying && replyingMessage ? replyingMessage.id : undefined,
         },
-      },
-      {
-        onSuccess: () => {
-          setContent("");
-          setAttachments([]);
-          setReplyingState({ isReplying: false, message: null });
-          setShowEmojiPicker(false);
+        {
+          onSuccess: () => {
+            setContent("");
+            setAttachments([]);
+            setEditingState({ isEditing: false, message: null });
+            setShowEmojiPicker(false);
+          },
+          onError: (error) => {
+            toast.error(
+              `Có lỗi xảy ra khi chỉnh sửa tin nhắn: ${error.message}`
+            );
+          },
+        }
+      );
+    } else {
+      createMessage(
+        {
+          roomId,
+          createMessageParams: {
+            content,
+            attachments,
+            parentMessageId:
+              isReplying && replyingMessage ? replyingMessage.id : undefined,
+          },
         },
-        onError: (error) => {
-          toast.error(`Có lỗi xảy ra khi gửi tin nhắn: ${error.message}`);
-        },
-      }
-    );
+        {
+          onSuccess: () => {
+            setContent("");
+            setAttachments([]);
+            setReplyingState({ isReplying: false, message: null });
+            setShowEmojiPicker(false);
+          },
+          onError: (error) => {
+            toast.error(`Có lỗi xảy ra khi gửi tin nhắn: ${error.message}`);
+          },
+        }
+      );
+    }
 
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -361,6 +389,13 @@ export const MessageEditor = ({
                   <DynamicEmojiPicker
                     emojiStyle={EmojiStyle.FACEBOOK}
                     onEmojiClick={handleEmojiClick}
+                    theme={
+                      theme === EmojiTheme.DARK
+                        ? EmojiTheme.DARK
+                        : theme === EmojiTheme.LIGHT
+                        ? EmojiTheme.LIGHT
+                        : EmojiTheme.AUTO
+                    }
                   />
                 </div>
               )}
@@ -385,12 +420,12 @@ export const MessageEditor = ({
             disabled={
               content.trim() === "" &&
               attachments.length === 0 &&
-              (isUploadingFiles || isCreatingMessage)
+              (isUploadingFiles || isCreatingMessage || isEditingMessage)
             }
             size="icon"
             className="disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isCreatingMessage ? (
+            {isCreatingMessage || isEditingMessage ? (
               <Loader2 className="animate-spin" />
             ) : (
               <SendHorizonal />

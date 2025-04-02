@@ -10,10 +10,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
 import { TeamLogo } from "@/components/shared/team-logo";
 import { useGetRooms } from "@/hooks/rooms";
 import { useRouter } from "next/navigation";
+import { MatchRoomSidebarSkeleton } from "@/components/skeleton/match-room-sidebar-skeleton";
 
 export const MatchRoomsSidebar = () => {
   const router = useRouter();
@@ -34,7 +34,7 @@ export const MatchRoomsSidebar = () => {
   }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   if (isLoadingRooms) {
-    return <div>Loading...</div>;
+    return <MatchRoomSidebarSkeleton />;
   }
 
   return (
@@ -72,34 +72,25 @@ export const MatchRoomsSidebar = () => {
                 className={"cursor-pointer transition-colors hover:bg-accent"}
                 onClick={() => router.push(`/community/room/${room.id}`)}
               >
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="flex items-center gap-2">
-                        <TeamLogo
-                          teamName={room.match.homeTeam}
-                          size="sm"
-                          showName={false}
-                        />
-                        <span>vs</span>
-                        <TeamLogo
-                          teamName={room.match.awayTeam}
-                          size="sm"
-                          showName={false}
-                        />
-                      </CardTitle>
-                      <CardDescription>
-                        {room.match.league.name} -{" "}
-                        {new Date(room.match.matchDate).toLocaleDateString(
-                          "vi-VN"
-                        )}{" "}
-                        {room.match.matchTime}
-                      </CardDescription>
-                    </div>
-                    <Badge variant="outline">
-                      {room.users.length} người tham gia
-                    </Badge>
-                  </div>
+                <CardHeader className="flex-row items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <TeamLogo
+                      teamName={room.match.homeTeam}
+                      size="lg"
+                      showName={true}
+                    />
+                    <span>vs</span>
+                    <TeamLogo
+                      teamName={room.match.awayTeam}
+                      size="lg"
+                      showName={true}
+                    />
+                  </CardTitle>
+                  <CardDescription>
+                    {room.match.league.name} -{" "}
+                    {new Date(room.match.matchDate).toLocaleDateString("vi-VN")}{" "}
+                    {room.match.matchTime}
+                  </CardDescription>
                 </CardHeader>
               </Card>
             ))

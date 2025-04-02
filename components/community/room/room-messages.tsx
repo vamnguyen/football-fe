@@ -52,7 +52,6 @@ export const RoomMessages = ({ roomId }: { roomId: string }) => {
     }, 1000);
   };
 
-  // Set up socket connections and event handlers
   useEffect(() => {
     socket.emit("onJoinRoom", { roomId });
     socket.emit("getRoomParticipants", { roomId });
@@ -77,7 +76,34 @@ export const RoomMessages = ({ roomId }: { roomId: string }) => {
       );
     };
 
-    // Handle typing status events
+    const handleMessageUpdated = (payload: {
+      message: Message;
+      roomId: string;
+    }) => {
+      queryClient.setQueryData(
+        ["room-messages", roomId],
+        (prev: Message[] | undefined) => {
+          if (!prev) return [];
+          return prev.map((msg) =>
+            msg.id === payload.message.id ? payload.message : msg
+          );
+        }
+      );
+    };
+
+    const handleMessageDeleted = (payload: {
+      messageId: string;
+      roomId: string;
+    }) => {
+      queryClient.setQueryData(
+        ["room-messages", roomId],
+        (prev: Message[] | undefined) => {
+          if (!prev) return [];
+          return prev.filter((msg) => msg.id !== payload.messageId);
+        }
+      );
+    };
+
     socket.on("userTypingStart", (data) => {
       setParticipantTyping({
         isTyping: data.isTyping,
@@ -95,6 +121,8 @@ export const RoomMessages = ({ roomId }: { roomId: string }) => {
     socket.on("userJoinedRoom", handleUserJoined);
     socket.on("userLeftRoom", handleUserLeft);
     socket.on("onRoomMessageCreated", handleMessageCreated);
+    socket.on("onRoomMessageUpdated", handleMessageUpdated);
+    socket.on("onRoomMessageDeleted", handleMessageDeleted);
     socket.on("getRoomParticipants", (count: number) => {
       setActiveParticipants(count);
     });
@@ -106,9 +134,33 @@ export const RoomMessages = ({ roomId }: { roomId: string }) => {
       socket.off("userTypingStart");
       socket.off("userTypingStop");
       socket.off("onRoomMessageCreated");
+      socket.off("onRoomMessageUpdated");
+      socket.off("onRoomMessageDeleted");
       socket.off("getRoomParticipants");
     };
-  }, [roomId, socket, queryClient, me?.id]);
+  }, [roomId, socket, queryClient]);
+
+  const handleClickEditMessage = (message: Message) => {
+    setEditingState({
+      isEditing: true,
+      message,
+    });
+    setReplyingState({
+      isReplying: false,
+      message: null,
+    });
+  };
+
+  const handleClickReplyMessage = (message: Message) => {
+    setReplyingState({
+      isReplying: true,
+      message,
+    });
+    setEditingState({
+      isEditing: false,
+      message: null,
+    });
+  };
 
   if (isLoadingRoom || isLoadingMessages) {
     return <RoomMessagesSkeleton />;
@@ -123,6 +175,8 @@ export const RoomMessages = ({ roomId }: { roomId: string }) => {
           messages={messages || []}
           user={me}
           participantTyping={participantTyping}
+          handleClickEditMessage={handleClickEditMessage}
+          handleClickReplyMessage={handleClickReplyMessage}
         />
 
         <MessageEditor
