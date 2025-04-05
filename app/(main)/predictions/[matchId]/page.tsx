@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,18 +10,31 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useParams } from "next/navigation";
-import useGetMatch from "@/hooks/matches/use-get-match";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TeamLogo } from "@/components/shared/team-logo";
-import YourPredictionTab from "@/components/predictions/tab/your-prediction-tab";
-import CommunityPredictionTab from "@/components/predictions/tab/community-prediction-tab";
-import AIPredictionTab from "@/components/predictions/tab/ai-prediction-tab";
+import { getMatch, Match } from "@/services/football-data";
+import { format } from "date-fns";
 
 export default function MatchIdPredictionPage() {
   const { matchId } = useParams();
-  const { data: match, isLoading } = useGetMatch(matchId as string);
+  const [match, setMatch] = useState<Match | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMatch = async () => {
+      try {
+        const data = await getMatch(Number(matchId));
+        setMatch(data);
+      } catch (error) {
+        console.error("Error fetching match:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMatch();
+  }, [matchId]);
 
   if (isLoading) {
     return (
@@ -52,7 +66,7 @@ export default function MatchIdPredictionPage() {
   }
 
   if (!match) {
-    return <div>Không tìm thấy trận đấu</div>;
+    return <div>Match not found</div>;
   }
 
   return (
@@ -61,52 +75,48 @@ export default function MatchIdPredictionPage() {
       <Card>
         <CardHeader>
           <div className="flex flex-col items-center gap-2">
-            <Badge variant="outline">{match.sport}</Badge>
-            <CardTitle className="mt-2">{match.league.name}</CardTitle>
+            <Badge variant="outline">{match.competition.name}</Badge>
+            <CardTitle className="mt-2">Matchday {match.matchday}</CardTitle>
             <CardDescription>
-              {new Date(match.matchDate || "").toLocaleDateString("vi-VN")}{" "}
-              {match.matchTime}
+              {format(new Date(match.utcDate), "MMM dd, yyyy HH:mm")}
             </CardDescription>
           </div>
-
-          {match.thumbnail && (
-            <div className="mt-4 relative h-32 w-full">
-              <Image
-                src={match.thumbnail}
-                alt="Match thumbnail"
-                fill
-                className="object-cover rounded-md"
-              />
-            </div>
-          )}
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <TeamLogo teamName={match.homeTeam} size="lg" showName={false} />
+              <TeamLogo
+                teamName={match.homeTeam.name}
+                size="lg"
+                showName={false}
+              />
               <div className="text-right">
-                <div className="text-xl font-bold">{match.homeTeam}</div>
-                <div className="text-sm text-muted-foreground">Sân nhà</div>
+                <div className="text-xl font-bold">{match.homeTeam.name}</div>
+                <div className="text-sm text-muted-foreground">Home</div>
               </div>
             </div>
 
             <div className="text-center">
-              {match.isFinished && match.score ? (
+              {match.status === "FINISHED" && match.score ? (
                 <div className="text-2xl font-bold bg-primary/10 px-4 py-2 rounded-md">
-                  {match.score}
+                  {match.score.fullTime.home} - {match.score.fullTime.away}
                 </div>
               ) : (
                 <div className="text-2xl font-bold">VS</div>
               )}
-              {match.isFinished && <Badge className="mt-2">Đã kết thúc</Badge>}
+              <Badge className="mt-2">{match.status}</Badge>
             </div>
 
             <div className="flex items-center gap-4">
               <div className="text-left">
-                <div className="text-xl font-bold">{match.awayTeam}</div>
-                <div className="text-sm text-muted-foreground">Sân khách</div>
+                <div className="text-xl font-bold">{match.awayTeam.name}</div>
+                <div className="text-sm text-muted-foreground">Away</div>
               </div>
-              <TeamLogo teamName={match.awayTeam} size="lg" showName={false} />
+              <TeamLogo
+                teamName={match.awayTeam.name}
+                size="lg"
+                showName={false}
+              />
             </div>
           </div>
         </CardContent>
@@ -115,19 +125,47 @@ export default function MatchIdPredictionPage() {
       {/* Prediction Content */}
       <Tabs defaultValue="ai" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="ai">Dự đoán AI</TabsTrigger>
-          <TabsTrigger value="community">Cộng đồng</TabsTrigger>
-          <TabsTrigger value="your-prediction">Dự đoán của bạn</TabsTrigger>
+          <TabsTrigger value="ai">AI Prediction</TabsTrigger>
+          <TabsTrigger value="community">Community</TabsTrigger>
+          <TabsTrigger value="your-prediction">Your Prediction</TabsTrigger>
         </TabsList>
 
         <TabsContent value="ai">
-          <AIPredictionTab match={match} />
+          <Card>
+            <CardHeader>
+              <CardTitle>AI Prediction</CardTitle>
+              <CardDescription>
+                Our AI model&apos;s prediction for this match
+              </CardDescription>
+            </CardHeader>
+            <CardContent>{/* Add AI prediction content here */}</CardContent>
+          </Card>
         </TabsContent>
+
         <TabsContent value="community">
-          <CommunityPredictionTab match={match} />
+          <Card>
+            <CardHeader>
+              <CardTitle>Community Predictions</CardTitle>
+              <CardDescription>
+                See what the community thinks about this match
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {/* Add community predictions content here */}
+            </CardContent>
+          </Card>
         </TabsContent>
+
         <TabsContent value="your-prediction">
-          <YourPredictionTab match={match} />
+          <Card>
+            <CardHeader>
+              <CardTitle>Your Prediction</CardTitle>
+              <CardDescription>
+                Make your prediction for this match
+              </CardDescription>
+            </CardHeader>
+            <CardContent>{/* Add your prediction form here */}</CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>

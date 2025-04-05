@@ -165,3 +165,14 @@ export const footballTeams: FootballTeamsMap = {
 };
 
 export const COLORS_CHART_PREDICTION = ["#22c55e", "#eab308", "#ef4444"];
+
+export const MATCH_STATUS = {
+  SCHEDULED: "SCHEDULED",
+  LIVE: "LIVE",
+  // IN_PLAY: "IN_PLAY",
+  // PAUSED: "PAUSED",
+  FINISHED: "FINISHED",
+  // POSTPONED: "POSTPONED",
+  // SUSPENDED: "SUSPENDED",
+  // CANCELED: "CANCELED",
+};

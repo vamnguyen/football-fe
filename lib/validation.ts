@@ -48,3 +48,31 @@ export const changePasswordSchema = z.object({
   newPassword: z.string().min(6, "Mật khẩu mới phải có ít nhất 6 ký tự"),
 });
 export type ChangePasswordSchemaType = z.infer<typeof changePasswordSchema>;
+
+export const matchesFilterSchema = z
+  .object({
+    dateFrom: z.string().optional(),
+    dateTo: z.string().optional(),
+    season: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.dateFrom && !data.dateTo) {
+        return false;
+      }
+      if (!data.dateFrom && data.dateTo) {
+        return false;
+      }
+      if (data.dateFrom && data.dateTo) {
+        return new Date(data.dateFrom) <= new Date(data.dateTo);
+      }
+      return true;
+    },
+    {
+      message:
+        "Date From and Date To must be used together, and Date From must be before or equal to Date To",
+      path: ["dateTo"],
+    }
+  );
+
+export type MatchesFilterSchemaType = z.infer<typeof matchesFilterSchema>;

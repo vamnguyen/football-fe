@@ -42,24 +42,24 @@ export interface League {
   description?: string;
 }
 
-export interface Match {
-  id: string;
-  homeTeam: string;
-  awayTeam: string;
-  matchDate: string;
-  matchTime: string;
-  league: League;
-  sport: SPORTS;
-  thumbnail?: string;
-  score?: string;
-  isFinished: boolean;
-  additionalInfo?: {
-    games?: number;
-    platform?: string;
-    gameTitle?: string;
-  };
-  predictions: Prediction[];
-}
+// export interface Match {
+//   id: string;
+//   homeTeam: string;
+//   awayTeam: string;
+//   matchDate: string;
+//   matchTime: string;
+//   league: League;
+//   sport: SPORTS;
+//   thumbnail?: string;
+//   score?: string;
+//   isFinished: boolean;
+//   additionalInfo?: {
+//     games?: number;
+//     platform?: string;
+//     gameTitle?: string;
+//   };
+//   predictions: Prediction[];
+// }
 
 export interface Prediction {
   id: string;
@@ -114,3 +114,89 @@ export interface ChatRoom {
   admin: User;
   users: User[];
 }
+
+// --------- Football Data API ---------
+export interface Area {
+  id: number;
+  name: string;
+  code: string;
+  flag: string;
+}
+
+export interface Competition {
+  id: number;
+  name: string;
+  code: string;
+  type: string;
+  emblem: string;
+  area: Area;
+  lastUpdated: string;
+  numberOfAvailableSeasons: number;
+  currentSeason: {
+    id: number;
+    startDate: string;
+    endDate: string;
+    currentMatchday: number;
+    winner: any;
+  };
+  seasons: {
+    id: number;
+    startDate: string;
+    endDate: string;
+    currentMatchday: number;
+  }[];
+}
+
+export interface Team {
+  id: number;
+  name: string;
+  shortName: string;
+  tla: string;
+  crest: string;
+  address: string;
+  website: string;
+  founded: number;
+  clubColors: string;
+  venue: string;
+  area: Area;
+}
+
+export interface Match {
+  id: number;
+  utcDate: string;
+  status: string;
+  matchday: number;
+  stage: string;
+  group: string;
+  lastUpdated: string;
+  homeTeam: Team;
+  awayTeam: Team;
+  score: {
+    winner: string;
+    duration: string;
+    fullTime: {
+      home: number;
+      away: number;
+    };
+    halfTime: {
+      home: number;
+      away: number;
+    };
+  };
+  referees: {
+    id: number;
+    name: string;
+    type: string;
+    nationality: string;
+  }[];
+  area: Area;
+  competition: Competition;
+  season: {
+    id: number;
+    startDate: string;
+    endDate: string;
+    currentMatchday: number;
+    winner: string | null;
+  };
+}
+// --------- Football Data API ---------

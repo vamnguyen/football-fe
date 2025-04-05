@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "d213oatl14uitb.cloudfront.net",
       },
+      {
+        hostname: "crests.football-data.org",
+      },
     ],
   },
 };
