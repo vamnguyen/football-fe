@@ -44,7 +44,7 @@ export default function CommunityPredictionTab({
       (pred) => pred.result === `${match.awayTeam.name} win`
     ).length;
     const draws = communityPredictions.data.filter(
-      (pred) => pred.result === "Draw"
+      (pred) => pred.result === "hòa"
     ).length;
 
     return [
