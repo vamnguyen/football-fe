@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { PaginationParams } from "@/lib/types";
 
 export default function useGetCommunityPredictions(
-  matchId: string,
+  matchId: number,
   paginationParams: PaginationParams
 ) {
   return useQuery({

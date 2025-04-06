@@ -4,7 +4,7 @@ import { UserCreatePredictionBody } from "@/lib/types";
 import { PaginationParams } from "@/lib/types";
 
 export const createUserPrediction = async (
-  matchId: string,
+  matchId: number,
   body: UserCreatePredictionBody
 ): Promise<Prediction> => {
   const response = await axiosInstance.post(
@@ -14,14 +14,14 @@ export const createUserPrediction = async (
   return response.data;
 };
 
-export const getUserPrediction = async (matchId: string) => {
+export const getUserPrediction = async (matchId: number) => {
   const response = await axiosInstance.get(
     `/predictions/my-prediction/${matchId}`
   );
   return response.data;
 };
 
-export const getAIPrediction = async (matchId: string) => {
+export const getAIPrediction = async (matchId: number) => {
   const response = await axiosInstance.get(
     `/predictions/ai-prediction/${matchId}`
   );
@@ -29,7 +29,7 @@ export const getAIPrediction = async (matchId: string) => {
 };
 
 export const getCommunityPredictions = async (
-  matchId: string,
+  matchId: number,
   paginationParams: PaginationParams
 ): Promise<PaginatedResponse<Prediction>> => {
   const response = await axiosInstance.get(

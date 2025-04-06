@@ -38,10 +38,10 @@ export default function CommunityPredictionTab({
 
     const totalPredictions = communityPredictions.data.length;
     const homeTeamWins = communityPredictions.data.filter(
-      (pred) => pred.result === `${match.homeTeam} win`
+      (pred) => pred.result === `${match.homeTeam.name} win`
     ).length;
     const awayTeamWins = communityPredictions.data.filter(
-      (pred) => pred.result === `${match.awayTeam} win`
+      (pred) => pred.result === `${match.awayTeam.name} win`
     ).length;
     const draws = communityPredictions.data.filter(
       (pred) => pred.result === "Draw"
@@ -49,7 +49,7 @@ export default function CommunityPredictionTab({
 
     return [
       {
-        name: `${match.homeTeam} thắng`,
+        name: `${match.homeTeam.name} thắng`,
         value: (homeTeamWins / totalPredictions) * 100,
         color: "#22c55e",
       },
@@ -59,7 +59,7 @@ export default function CommunityPredictionTab({
         color: "#f59e0b",
       },
       {
-        name: `${match.awayTeam} thắng`,
+        name: `${match.awayTeam.name} thắng`,
         value: (awayTeamWins / totalPredictions) * 100,
         color: "#ef4444",
       },
@@ -67,9 +67,9 @@ export default function CommunityPredictionTab({
   }, [communityPredictions, match]);
 
   const communityPredictionData = calculatePredictionStats() || [
-    { name: `${match.homeTeam} thắng`, value: 0, color: "#22c55e" },
+    { name: `${match.homeTeam.name} thắng`, value: 0, color: "#22c55e" },
     { name: "Hòa", value: 0, color: "#f59e0b" },
-    { name: `${match.awayTeam} thắng`, value: 0, color: "#ef4444" },
+    { name: `${match.awayTeam.name} thắng`, value: 0, color: "#ef4444" },
   ];
 
   return (

@@ -12,8 +12,8 @@ export default function UserPrediction({
     <Card>
       <CardHeader>
         <CardTitle>
-          Dự đoán của bạn: {userPrediction.match.homeTeam} vs{" "}
-          {userPrediction.match.awayTeam}
+          Dự đoán của bạn: {userPrediction.match.homeTeam.name} vs{" "}
+          {userPrediction.match.awayTeam.name}
         </CardTitle>
       </CardHeader>
       <CardContent>

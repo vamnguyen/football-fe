@@ -54,7 +54,7 @@ export default function YourPredictionTab({ match }: YourPredictionTabProps) {
         >
           <div>
             <RadioGroupItem
-              value={`${match.homeTeam} win`}
+              value={`${match.homeTeam.name} win`}
               id="win"
               className="peer sr-only"
             />
@@ -64,7 +64,7 @@ export default function YourPredictionTab({ match }: YourPredictionTabProps) {
             >
               <span className="text-lg font-bold">Thắng</span>
               <span className="text-sm text-muted-foreground mt-1">
-                {match.homeTeam} thắng
+                {match.homeTeam.name} thắng
               </span>
             </Label>
           </div>
@@ -82,7 +82,7 @@ export default function YourPredictionTab({ match }: YourPredictionTabProps) {
           </div>
           <div>
             <RadioGroupItem
-              value={`${match.awayTeam} win`}
+              value={`${match.awayTeam.name} win`}
               id="lose"
               className="peer sr-only"
             />
@@ -92,7 +92,7 @@ export default function YourPredictionTab({ match }: YourPredictionTabProps) {
             >
               <span className="text-lg font-bold">Thua</span>
               <span className="text-sm text-muted-foreground mt-1">
-                {match.awayTeam} thắng
+                {match.awayTeam.name} thắng
               </span>
             </Label>
           </div>

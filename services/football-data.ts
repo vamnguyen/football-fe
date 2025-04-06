@@ -214,8 +214,12 @@ export const getPersonMatches = async ({
 };
 
 export const getMatch = async (id: number): Promise<any> => {
-  const response = await axiosInstance.get(`/football-data/matches/${id}`);
-  return response.data;
+  try {
+    const response = await axiosInstance.get(`/football-data/matches/${id}`);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
+  }
 };
 
 export const getMatchList = async ({

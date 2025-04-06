@@ -99,200 +99,198 @@ export function UpcomingMatches() {
     matches?.filter((match: Match) => match.status === selectedStatus) || [];
 
   return (
-    <>
-      <div>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold">HOT Matches 🔥</h2>
-          <div className="flex gap-2">
-            <Select
-              value={selectedCompetition}
-              onValueChange={setSelectedCompetition}
-            >
-              <SelectTrigger className="min-w-[180px]">
-                <SelectValue placeholder="Select Competition" />
-              </SelectTrigger>
-              <SelectContent>
-                {competitions?.map((competition) => (
-                  <SelectItem key={competition.id} value={competition.code}>
-                    {competition.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4 mb-6">
-          <Tabs value={selectedStatus} onValueChange={setSelectedStatus}>
-            <TabsList className="grid w-full grid-cols-3">
-              {Object.entries(MATCH_STATUS).map(([key, value]) => (
-                <TabsTrigger key={key} value={value}>
-                  {key}
-                </TabsTrigger>
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-semibold">HOT Matches 🔥</h2>
+        <div className="flex gap-2">
+          <Select
+            value={selectedCompetition}
+            onValueChange={setSelectedCompetition}
+          >
+            <SelectTrigger className="min-w-[180px]">
+              <SelectValue placeholder="Select Competition" />
+            </SelectTrigger>
+            <SelectContent>
+              {competitions?.map((competition) => (
+                <SelectItem key={competition.id} value={competition.code}>
+                  {competition.name}
+                </SelectItem>
               ))}
-            </TabsList>
-          </Tabs>
-
-          <Form {...form}>
-            <form className="flex gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-              <FormField
-                control={form.control}
-                name="dateFrom"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        placeholder="Date From (e.g. 2023-01-01)"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="dateTo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        placeholder="Date To (e.g. 2023-01-01)"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="season"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Season (e.g. 2024)"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button>Apply Filters</Button>
-              <Button
-                variant="outline"
-                type="button"
-                onClick={() => {
-                  form.reset();
-                  setFilters((prev) => ({
-                    ...prev,
-                    dateFrom: "",
-                    dateTo: "",
-                    season: "",
-                  }));
-                }}
-              >
-                Clear Filters
-              </Button>
-            </form>
-          </Form>
+            </SelectContent>
+          </Select>
         </div>
-
-        {filteredMatches.length === 0 ? (
-          <div className="text-center py-8 text-primary">No matches found</div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredMatches
-                .slice((page - 1) * limit, page * limit)
-                .map((match: Match) => (
-                  <Card
-                    key={match.id}
-                    className="hover:shadow-lg transition-shadow overflow-hidden"
-                  >
-                    <CardHeader className="gap-1">
-                      <div className="flex items-center justify-between gap-4">
-                        <TeamLogo
-                          logo={match.homeTeam.crest}
-                          teamName={match.homeTeam.name}
-                          size="lg"
-                        />
-                        <span className="text-lg font-semibold">VS</span>
-                        <TeamLogo
-                          logo={match.awayTeam.crest}
-                          teamName={match.awayTeam.name}
-                          size="lg"
-                        />
-                      </div>
-                      <div className="flex justify-between">
-                        <Badge variant="outline" className="mt-2">
-                          {match.status}
-                        </Badge>
-                        <Badge>{match.competition.name}</Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="text-center pb-4">
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <span className="text-sm text-primary">
-                          Matchday {match.matchday}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="text-sm text-primary">
-                          {format(new Date(match.utcDate), "MMM dd, yyyy")}
-                        </span>
-                      </div>
-                      {match.status === "FINISHED" && match.score && (
-                        <div className="mt-4 space-y-2">
-                          <div className="text-lg font-bold">
-                            {match.score.fullTime.home} -{" "}
-                            {match.score.fullTime.away}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Winner: {match.score.winner}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Duration: {match.score.duration}
-                          </div>
-                          {match.score.halfTime && (
-                            <div className="text-sm text-muted-foreground">
-                              Half Time: {match.score.halfTime.home} -{" "}
-                              {match.score.halfTime.away}
-                            </div>
-                          )}
-                          {match.referees && match.referees.length > 0 && (
-                            <div className="text-sm text-muted-foreground">
-                              Referee: {match.referees[0].name}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </CardContent>
-                    <CardFooter>
-                      <Button className="w-full" asChild>
-                        <Link href={`/predictions/${match.id}`}>
-                          View Details & Predict
-                        </Link>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
-            </div>
-            <Pagination
-              page={page}
-              limit={limit}
-              totalResults={filteredMatches.length}
-              totalPages={Math.ceil(filteredMatches.length / limit)}
-              onPageChange={setPage}
-            />
-          </>
-        )}
       </div>
-    </>
+
+      <div className="flex flex-col gap-4 mb-6">
+        <Tabs value={selectedStatus} onValueChange={setSelectedStatus}>
+          <TabsList className="grid w-full grid-cols-3">
+            {Object.entries(MATCH_STATUS).map(([key, value]) => (
+              <TabsTrigger key={key} value={value}>
+                {key}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+
+        <Form {...form}>
+          <form className="flex gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              control={form.control}
+              name="dateFrom"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      placeholder="Date From (e.g. 2023-01-01)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="dateTo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      placeholder="Date To (e.g. 2023-01-01)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="season"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Season (e.g. 2024)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button>Apply Filters</Button>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => {
+                form.reset();
+                setFilters((prev) => ({
+                  ...prev,
+                  dateFrom: "",
+                  dateTo: "",
+                  season: "",
+                }));
+              }}
+            >
+              Clear Filters
+            </Button>
+          </form>
+        </Form>
+      </div>
+
+      {filteredMatches.length === 0 ? (
+        <div className="text-center py-8 text-primary">No matches found</div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredMatches
+              .slice((page - 1) * limit, page * limit)
+              .map((match: Match) => (
+                <Card
+                  key={match.id}
+                  className="hover:shadow-lg transition-shadow overflow-hidden"
+                >
+                  <CardHeader className="gap-1">
+                    <div className="flex items-center justify-between gap-4">
+                      <TeamLogo
+                        logo={match.homeTeam.crest}
+                        teamName={match.homeTeam.name}
+                        size="lg"
+                      />
+                      <span className="text-lg font-semibold">VS</span>
+                      <TeamLogo
+                        logo={match.awayTeam.crest}
+                        teamName={match.awayTeam.name}
+                        size="lg"
+                      />
+                    </div>
+                    <div className="flex justify-between">
+                      <Badge variant="outline" className="mt-2">
+                        {match.status}
+                      </Badge>
+                      <Badge>{match.competition.name}</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="text-center pb-4">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <span className="text-sm text-primary">
+                        Matchday {match.matchday}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-sm text-primary">
+                        {format(new Date(match.utcDate), "MMM dd, yyyy")}
+                      </span>
+                    </div>
+                    {match.status === "FINISHED" && match.score && (
+                      <div className="mt-4 space-y-2">
+                        <div className="text-lg font-bold">
+                          {match.score.fullTime.home} -{" "}
+                          {match.score.fullTime.away}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Winner: {match.score.winner}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Duration: {match.score.duration}
+                        </div>
+                        {match.score.halfTime && (
+                          <div className="text-sm text-muted-foreground">
+                            Half Time: {match.score.halfTime.home} -{" "}
+                            {match.score.halfTime.away}
+                          </div>
+                        )}
+                        {match.referees && match.referees.length > 0 && (
+                          <div className="text-sm text-muted-foreground">
+                            Referee: {match.referees[0].name}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </CardContent>
+                  <CardFooter>
+                    <Button className="w-full" asChild>
+                      <Link href={`/predictions/${match.id}`}>
+                        View Details & Predict
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+          </div>
+          <Pagination
+            page={page}
+            limit={limit}
+            totalResults={filteredMatches.length}
+            totalPages={Math.ceil(filteredMatches.length / limit)}
+            onPageChange={setPage}
+          />
+        </>
+      )}
+    </div>
   );
 }

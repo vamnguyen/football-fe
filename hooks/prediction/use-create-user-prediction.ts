@@ -3,7 +3,7 @@ import { createUserPrediction } from "@/services/prediction";
 import { UserCreatePredictionBody } from "@/lib/types";
 import { toast } from "sonner";
 
-export default function useCreateUserPrediction(matchId: string) {
+export default function useCreateUserPrediction(matchId: number) {
   const queryClient = useQueryClient();
 
   return useMutation({

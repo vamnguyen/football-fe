@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -11,58 +10,30 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { TeamLogo } from "@/components/shared/team-logo";
-import { getMatch, Match } from "@/services/football-data";
 import { format } from "date-fns";
+import { useGetMatch } from "@/hooks/football-data/match/use-get-match";
+import { toast } from "sonner";
+import { MatchIdPageSkeleton } from "@/components/skeleton/match-id-page-skeleton";
+import AIPredictionTab from "@/components/predictions/tab/ai-prediction-tab";
+import CommunityPredictionTab from "@/components/predictions/tab/community-prediction-tab";
+import YourPredictionTab from "@/components/predictions/tab/your-prediction-tab";
 
 export default function MatchIdPredictionPage() {
   const { matchId } = useParams();
-  const [match, setMatch] = useState<Match | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMatch = async () => {
-      try {
-        const data = await getMatch(Number(matchId));
-        setMatch(data);
-      } catch (error) {
-        console.error("Error fetching match:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMatch();
-  }, [matchId]);
+  const {
+    data: match,
+    isLoading,
+    isError,
+    error,
+  } = useGetMatch(Number(matchId));
 
   if (isLoading) {
-    return (
-      <div className="flex flex-col gap-6">
-        <Card>
-          <CardHeader className="text-center">
-            <Skeleton className="h-6 w-32 mx-auto" />
-            <Skeleton className="h-4 w-48 mx-auto mt-2" />
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <Skeleton className="h-12 w-48" />
-              <Skeleton className="h-8 w-8" />
-              <Skeleton className="h-12 w-48" />
-            </div>
-          </CardContent>
-        </Card>
+    return <MatchIdPageSkeleton />;
+  }
 
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-32" />
-          </CardHeader>
-          <CardContent>
-            <Skeleton className="h-64 w-full" />
-          </CardContent>
-        </Card>
-      </div>
-    );
+  if (isError && error) {
+    toast.error(error.message);
   }
 
   if (!match) {
@@ -74,12 +45,12 @@ export default function MatchIdPredictionPage() {
       {/* Match Header */}
       <Card>
         <CardHeader>
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-4">
             <Badge variant="outline">{match.competition.name}</Badge>
-            <CardTitle className="mt-2">Matchday {match.matchday}</CardTitle>
-            <CardDescription>
-              {format(new Date(match.utcDate), "MMM dd, yyyy HH:mm")}
-            </CardDescription>
+            <CardTitle>
+              {format(new Date(match.utcDate), "MMM dd, yyyy")}
+            </CardTitle>
+            <CardDescription>Matchday {match.matchday}</CardDescription>
           </div>
         </CardHeader>
         <CardContent>
@@ -89,6 +60,7 @@ export default function MatchIdPredictionPage() {
                 teamName={match.homeTeam.name}
                 size="lg"
                 showName={false}
+                logo={match.homeTeam.crest}
               />
               <div className="text-right">
                 <div className="text-xl font-bold">{match.homeTeam.name}</div>
@@ -116,6 +88,7 @@ export default function MatchIdPredictionPage() {
                 teamName={match.awayTeam.name}
                 size="lg"
                 showName={false}
+                logo={match.awayTeam.crest}
               />
             </div>
           </div>
@@ -131,41 +104,15 @@ export default function MatchIdPredictionPage() {
         </TabsList>
 
         <TabsContent value="ai">
-          <Card>
-            <CardHeader>
-              <CardTitle>AI Prediction</CardTitle>
-              <CardDescription>
-                Our AI model&apos;s prediction for this match
-              </CardDescription>
-            </CardHeader>
-            <CardContent>{/* Add AI prediction content here */}</CardContent>
-          </Card>
+          <AIPredictionTab match={match} />
         </TabsContent>
 
         <TabsContent value="community">
-          <Card>
-            <CardHeader>
-              <CardTitle>Community Predictions</CardTitle>
-              <CardDescription>
-                See what the community thinks about this match
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {/* Add community predictions content here */}
-            </CardContent>
-          </Card>
+          <CommunityPredictionTab match={match} />
         </TabsContent>
 
         <TabsContent value="your-prediction">
-          <Card>
-            <CardHeader>
-              <CardTitle>Your Prediction</CardTitle>
-              <CardDescription>
-                Make your prediction for this match
-              </CardDescription>
-            </CardHeader>
-            <CardContent>{/* Add your prediction form here */}</CardContent>
-          </Card>
+          <YourPredictionTab match={match} />
         </TabsContent>
       </Tabs>
     </div>

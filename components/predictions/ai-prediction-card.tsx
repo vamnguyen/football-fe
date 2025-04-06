@@ -21,7 +21,7 @@ export default function AIPredictionCard({
   const chartData = AIPrediction.probabilities
     ? [
         {
-          name: `${AIPrediction.match.homeTeam} Thắng`,
+          name: `${AIPrediction.match.homeTeam.name} Thắng`,
           value: AIPrediction.probabilities.homeWin,
           color: COLORS_CHART_PREDICTION[0],
         },
@@ -31,7 +31,7 @@ export default function AIPredictionCard({
           color: COLORS_CHART_PREDICTION[1],
         },
         {
-          name: `${AIPrediction.match.awayTeam} Thắng`,
+          name: `${AIPrediction.match.awayTeam.name} Thắng`,
           value: AIPrediction.probabilities.awayWin,
           color: COLORS_CHART_PREDICTION[2],
         },
